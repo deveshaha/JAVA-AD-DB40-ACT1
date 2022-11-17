@@ -3,6 +3,7 @@ package dam.main;
 import dam.db.AccesoBibliotecaDB;
 import dam.pojo.Autor;
 import dam.pojo.Libro;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -95,10 +96,16 @@ public class GestionBiblioteca {
         sc = new Scanner(System.in);
         System.out.println("Introduce el titulo del libro");
         String titulo = sc.nextLine();
-        System.out.println("Introduce el nuevo numero de paginas");
-        int numPagN = sc.nextInt();
 
-        accesoDB.modificarNumPaginas(titulo, numPagN);
+        if (accesoDB.consultarLibro(titulo) == null){
+            System.out.println("El libro no existe");
+        } else {
+            System.out.println("Introduce el nuevo numero de paginas");
+            int numPagN = sc.nextInt();
+            accesoDB.modificarNumPaginas(titulo, numPagN);
+            System.out.println("El numero de paginas se ha modificado correctamente");
+        }
+
     }
 
     private static void insertarAutoresYLibros() {

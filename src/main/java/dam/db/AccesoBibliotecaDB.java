@@ -49,6 +49,7 @@ public class AccesoBibliotecaDB {
     }
 
     public void modificarNumPaginas(String titulo, int numPagN) {
+
         Query consulta = db.query();
         consulta.constrain(Libro.class);
 
@@ -62,5 +63,20 @@ public class AccesoBibliotecaDB {
 
         db.store(libro);
 
+    }
+
+    public Libro consultarLibro(String titulo) {
+        Query consulta = db.query();
+        consulta.constrain(Libro.class);
+
+        consulta.descend("titulo").constrain(titulo);
+
+        ObjectSet<Libro> setLibro = consulta.execute();
+
+        if (setLibro.isEmpty()){
+            return null;
+        } else {
+            return setLibro.next();
+        }
     }
 }
